@@ -27,25 +27,16 @@ const expandObjs = (objs, palette) => {
 export const Sketch = (props) => {
 
     const [ref, setRef ] = useState(React.createRef())
- 
-    let background = random.pick(palettes.shift())
-    let palette = random.pick(palettes);
-    palette = random.shuffle(palette);
-
-    const settings = {
+    const [ background, setBackground ] = useState(random.pick(palettes.shift()))
+    const [palette, setPalette] = useState(random.pick(palettes));
+    const [settings, setSettings] = useState({
         dimensions: [1024, 1024],
         animate: true,
-    };
-
-    let arr = []
+    });
+    const [arr, setArr] = useState([])
+    const [fps, setFps] = useState(24)
 
     createObjs(15, arr, palette)
-
-    // arr.filter(() => Math.random() > 0.9)
-
-
-
-    let fps = 24
 
     const sketch = () => {
         return ({ context, width, height }) => {
@@ -64,14 +55,14 @@ export const Sketch = (props) => {
         }
     }
 
-
     settings.canvas = ref.current
     canvasSketch(sketch, settings)
 
     setInterval(() => {
         expandObjs(arr, palette)
-        // canvasSketch(sketch, settings)
     }, 1000 / fps)
 
-    return <canvas ref={ref}/>
+    return (
+        <canvas ref={ref}/>
+    )
 }
