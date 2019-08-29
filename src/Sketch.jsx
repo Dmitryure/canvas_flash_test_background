@@ -17,9 +17,10 @@ const createObjs = (amount, arr, palette) => {
     }
 } 
 
-const expandObjs = (objs) => {
+const expandObjs = (objs, palette) => {
     for (let i = 0; i < objs.length; i++) {
         objs[i].radius = objs[i].radius >= 2 ? objs[i].radius + random.range(-2, 0) : random.range(1, 30)
+        objs[i].color = objs[i].radius >= 2 ? objs[i].color : objs[i].color = random.pick(palette) 
     }
 }
 
@@ -68,7 +69,7 @@ export const Sketch = (props) => {
     canvasSketch(sketch, settings)
 
     setInterval(() => {
-        expandObjs(arr)
+        expandObjs(arr, palette)
         // canvasSketch(sketch, settings)
     }, 1000 / fps)
 
